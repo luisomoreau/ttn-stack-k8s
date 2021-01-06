@@ -6,13 +6,18 @@ provider scaleway {
 }
 
 # Database
+resource "random_password" "db_password" {
+  length  = 16
+  special = true
+}
+
 resource scaleway_rdb_instance_beta ttndb {
   name          = "thethingsnetwork"
   node_type     = "db-dev-s"
   engine        = "PostgreSQL-12"
   is_ha_cluster = true
   user_name     = "root"
-  password      = "Ch4ng3m3!"
+  password      = random_password.db_password.result
   tags          = ["tf-test", "pro"]
 }
 
