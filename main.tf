@@ -66,7 +66,7 @@ resource "kubernetes_config_map" "ttndb" {
     db_user        = scaleway_rdb_instance_beta.ttndb.user_name
     db_password    = scaleway_rdb_instance_beta.ttndb.password
     db_db          = "rdb"
-    db_uri         = "postgres://${scaleway_rdb_instance_beta.ttndb.user_name}:${scaleway_rdb_instance_beta.ttndb.password}@${scaleway_rdb_instance_beta.ttndb.endpoint_ip}:${scaleway_rdb_instance_beta.ttndb.endpoint_port}/rdb"
+    db_uri         = "postgres://${scaleway_rdb_instance_beta.ttndb.user_name}:${urlencode(scaleway_rdb_instance_beta.ttndb.password)}@${scaleway_rdb_instance_beta.ttndb.endpoint_ip}:${scaleway_rdb_instance_beta.ttndb.endpoint_port}/rdb"
   }
 }
 
