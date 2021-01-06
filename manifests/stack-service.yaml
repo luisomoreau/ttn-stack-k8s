@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ttn-lw-stack
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      targetPort: http
+      port: 1885
+    - name: https
+      targetPort: https
+      port: 8885
+    - name: gwdata-mqttv2
+      targetPort: gwdata-mqttv2
+      port: 1881
+    - name: gwdata-mqttsv2
+      targetPort: gwdata-mqttsv2
+      port: 8881
+    - name: gwdata-mqtt
+      targetPort: gwdata-mqtt
+      port: 1882
+    - name: gwdata-mqtts
+      targetPort: gwdata-mqtts
+      port: 8882
+    - name: appdata-mqtt
+      targetPort: appdata-mqtt
+      port: 1883
+    - name: appdata-mqtts
+      targetPort: appdata-mqtts
+      port: 8883
+    - name: grpc
+      targetPort: grpc
+      port: 1884
+    - name: grpcs
+      targetPort: grpcs
+      port: 8884
+    - name: back-interfaces
+      targetPort: back-interfaces
+      port: 8886
+    - name: lora-lns-ws
+      targetPort: lora-lns-ws
+      port: 1887
+    - name: lora-lns-wss
+      targetPort: lora-lns-wss
+      port: 8887
+    - name: semtech-fwd
+      targetPort: semtech-fwd
+      port: 1700
+      protocol: UDP
+  selector:
+    app: ttn-lw-stack

@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttn-lw-stack-setup
+spec:
+  selector:
+    matchLabels:
+      app: ttn-lw-stack-setup
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ttn-lw-stack-setup
+      name: ttn-lw-stack-setup
+    spec:
+      restartPolicy: Never
+      containers:
+      volumes:
+        - name: stack-config
+          configMap:
+            name: ttn-lw-stack-config

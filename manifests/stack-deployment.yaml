@@ -1,0 +1,102 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttn-lw-stack
+spec:
+  selector:
+    matchLabels:
+      app: ttn-lw-stack
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ttn-lw-stack
+      name: ttn-lw-stack
+    spec:
+      initContainers:
+        - name: init-db
+          args:
+            - is-db
+            - init
+          command:
+            - ttn-lw-stack
+            - -c
+            - /config/ttn-lw-stack-docker.yaml
+          env:
+            - name: TTN_LW_IS_DATABASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: db_uri
+          image: ttn-stack
+          volumeMounts:
+            - mountPath: /config
+              name: stack-config
+      containers:
+        - name: stack
+          args:
+            - start
+          command:
+            - ttn-lw-stack
+            - -c
+            - /config/ttn-lw-stack-docker.yaml
+          env:
+            - name: TTN_LW_IS_DATABASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: db_uri
+            - name: TTN_LW_BLOB_LOCAL_DIRECTORY
+              value: /srv/ttn-lorawan/public/blob
+            - name: TTN_LW_REDIS_ADDRESS
+              value: redis:6379
+          image: ttn-stack
+          ports:
+            - name: http
+              containerPort: 1885
+            - name: https
+              containerPort: 8885
+            - name: gwdata-mqttv2
+              containerPort: 1881
+            - name: gwdata-mqttsv2
+              containerPort: 8881
+            - name: gwdata-mqtt
+              containerPort: 1882
+            - name: gwdata-mqtts
+              containerPort: 8882
+            - name: appdata-mqtt
+              containerPort: 1883
+            - name: appdata-mqtts
+              containerPort: 8883
+            - name: grpc
+              containerPort: 1884
+            - name: grpcs
+              containerPort: 8884
+            - name: back-interfaces
+              containerPort: 8886
+            - name: lora-lns-ws
+              containerPort: 1887
+            - name: lora-lns-wss
+              containerPort: 8887
+            - name: semtech-fwd
+              containerPort: 1700
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /srv/ttn-lorawan/public/blob
+              name: stack-blob
+            - mountPath: /config
+              name: stack-config
+            - mountPath: /var/lib/acme
+              name: stack-acme
+      volumes:
+        - name: stack-blob
+          persistentVolumeClaim:
+            claimName: stack-blob
+        - name: stack-config
+          configMap:
+            name: ttn-lw-stack-config
+        - name: stack-acme
+          emptyDir: {} # TODO Change this, or you WILL get ratelimited by Letsencrypt
