@@ -44,6 +44,17 @@ spec:
     - name: lora-lns-wss
       targetPort: lora-lns-wss
       port: 8887
+  selector:
+    app: ttn-lw-stack
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ttn-lw-stack-semtech-fwd
+spec:
+  type: NodePort
+  ports:
     - name: semtech-fwd
       targetPort: semtech-fwd
       port: 1700
