@@ -14,6 +14,7 @@ The following resources will be created:
 - RDB instance
 - Kapsule cluster
 - Load Balancer
+- Two block Storages of 2GB each
 
 ### Installing
 
