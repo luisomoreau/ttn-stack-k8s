@@ -89,7 +89,7 @@ spec:
               name: stack-blob
             - mountPath: /config
               name: stack-config
-            - mountPath: /var/lib/acme
+            - mountPath: /var/lib/certificates
               name: stack-acme
       volumes:
         - name: stack-blob
@@ -99,4 +99,5 @@ spec:
           configMap:
             name: ttn-lw-stack-config
         - name: stack-acme
-          emptyDir: {} # TODO Change this, or you WILL get ratelimited by Letsencrypt
+          secret:
+            secretName: ttn-tls

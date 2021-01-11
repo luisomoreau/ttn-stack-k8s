@@ -1,0 +1,37 @@
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: traefik-ingress-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: traefik-ingress
+  template:
+    metadata:
+      labels:
+        name: traefik-ingress
+    spec:
+      serviceAccountName: traefik-ingress-controller
+      terminationGracePeriodSeconds: 60
+      containers:
+      - image: traefik:2.2.4
+        name: traefik
+        volumeMounts:
+        - mountPath: /config
+          name: traefik-config
+        ports:
+        - name: http
+          containerPort: 80
+        - name: admin
+          containerPort: 8080
+        - name: https
+          containerPort: 443
+        args:
+        - --configfile=/config/traefik.yaml
+      volumes:
+        - name: traefik-config
+          configMap:
+            name: traefik-conf

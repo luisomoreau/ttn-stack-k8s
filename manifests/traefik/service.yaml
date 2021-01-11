@@ -1,0 +1,20 @@
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-lb
+  namespace: infra
+  annotations:
+    service.beta.kubernetes.io/scw-loadbalancer-send-proxy-v2: "true"
+spec:
+  selector:
+    name: traefik-ingress
+  ports:
+    - protocol: TCP
+      port: 80
+      name: http
+    - protocol: TCP
+      port: 443
+      name: https
+  type: LoadBalancer

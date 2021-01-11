@@ -1,0 +1,15 @@
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-api
+spec:
+  selector:
+    name: traefik-ingress
+  ports:
+    - protocol: TCP
+      port: 8080
+      name: admin
+  type: ClusterIP
+

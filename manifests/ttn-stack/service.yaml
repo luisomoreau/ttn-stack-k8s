@@ -1,16 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: ttn-lw-stack-web
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      targetPort: http
+      port: 80
+    - name: https
+      targetPort: https
+      port: 443
+  selector:
+    app: ttn-lw-stack
+
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: ttn-lw-stack
 spec:
   type: LoadBalancer
   ports:
-    - name: http
-      targetPort: http
-      port: 1885
-    - name: https
-      targetPort: https
-      port: 8885
     - name: gwdata-mqttv2
       targetPort: gwdata-mqttv2
       port: 1881

@@ -47,9 +47,15 @@ provider "kubernetes" {
   )
 }
 
-resource "kubernetes_namespace" "namespace" {
+resource "kubernetes_namespace" "stack-namespace" {
   metadata {
     name = "lorawan-stack"
+  }
+}
+
+resource "kubernetes_namespace" "traefik-namespace" {
+  metadata {
+    name = "traefik"
   }
 }
 
@@ -70,18 +76,8 @@ resource "kubernetes_config_map" "ttndb" {
   }
 }
 
-# Software stack deployment
-provider "kustomization" {
-  kubeconfig_raw = scaleway_k8s_cluster_beta.ttn.kubeconfig[0].config_file
-}
-
-data "kustomization_build" "ttn" {
-  depends_on = [scaleway_k8s_pool_beta.ttn, scaleway_rdb_instance_beta.ttndb]
-  path       = "manifests"
-}
-
-resource "kustomization_resource" "ttn" {
-  for_each = data.kustomization_build.ttn.ids
-
-  manifest = data.kustomization_build.ttn.manifests[each.value]
+# Save kubeconfig
+resource "local_file" "kubeconfig" {
+  content  = scaleway_k8s_cluster_beta.ttn.kubeconfig[0].config_file
+  filename = "${path.module}/kubeconfig"
 }

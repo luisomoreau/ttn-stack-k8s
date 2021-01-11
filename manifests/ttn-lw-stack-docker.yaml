@@ -39,20 +39,11 @@ http:
     password: 'pprof'                 # choose a password
 
 # If using custom certificates:
-#tls:
-#  source: file
-#  root-ca: /run/secrets/ca.pem
-#  certificate: /run/secrets/cert.pem
-#  key: /run/secrets/key.pem
-
-# Let's encrypt for "thethings.example.com"
 tls:
-  source: 'acme'
-  acme:
-    dir: '/var/lib/acme'
-    email: 'you@thethings.example.com'
-    hosts: ['thethings.example.com']
-    default-host: 'thethings.example.com'
+  source: file
+  #  root-ca: /var/lib/certificates/ca.pem
+  certificate: /var/lib/certificates/tls.crt
+  key: /var/lib/certificates/tls.key
 
 # If Gateway Server enabled, defaults for "thethings.example.com":
 gs:

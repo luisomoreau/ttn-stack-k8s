@@ -1,0 +1,27 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: stack-web-ui
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/issuer: letsencrypt
+    cert-manager.io/issuer-kind: ClusterIssuer
+    acme.cert-manager.io/http01-ingress-class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-temporary-redirect: "false"
+spec:
+  rules:
+  - host: example.org
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ttn-lw-stack-web
+          servicePort: http
+  tls:
+  - hosts:
+    - example.org
+    secretName: ttn-tls

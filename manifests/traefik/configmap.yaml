@@ -1,0 +1,51 @@
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+data:
+  traefik.yaml: |
+    entryPoints:
+      web:
+        address: ":80"
+        proxyProtocol:
+          trustedIPs:
+          - 10.0.0.0/8
+      websecure:
+        address: ":443"
+        proxyProtocol:
+          trustedIPs:
+          - 10.0.0.0/8
+        http:
+          tls: {}
+      ping:
+        address: ":9999"
+
+    providers:
+      kubernetesIngress:
+        namespaces:
+          - traefik
+          - lorawan-stack
+
+    ping:
+      entryPoint: "ping"
+
+    api:
+      dashboard: true
+      insecure: true
+
+    log:
+      level: "info"
+      format: "json"
+
+    accessLog:
+      format: "json"
+      fields:
+        defaultMode: "drop"
+        headers:
+          defaultMode: "drop"
+          names:
+            netid: keep
+      filters:
+        minDuration: "10ms"
