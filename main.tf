@@ -48,12 +48,14 @@ provider "kubernetes" {
 }
 
 resource "kubernetes_namespace" "stack-namespace" {
+  depends_on = [scaleway_k8s_pool_beta.ttn]
   metadata {
     name = "lorawan-stack"
   }
 }
 
 resource "kubernetes_namespace" "traefik-namespace" {
+  depends_on = [scaleway_k8s_pool_beta.ttn]
   metadata {
     name = "traefik"
   }
@@ -78,6 +80,7 @@ resource "kubernetes_config_map" "ttndb" {
 
 # Save kubeconfig
 resource "local_file" "kubeconfig" {
-  content  = scaleway_k8s_cluster_beta.ttn.kubeconfig[0].config_file
-  filename = "${path.module}/kubeconfig"
+  depends_on = [scaleway_k8s_pool_beta.ttn]
+  content    = scaleway_k8s_cluster_beta.ttn.kubeconfig[0].config_file
+  filename   = "${path.module}/kubeconfig"
 }
