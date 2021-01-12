@@ -24,6 +24,7 @@ The following resources will be created:
    - manifests/ttn-stack/ttn-lw-stack-docker.yaml
    - manifests/ttn-stack/ingress.yaml
    - manifests/cert-manager/cert-issuer.yaml
+   - manifests/grafana/ingress.yaml
 1. Import the generated kubeconfig file with `export KUBECONFIG=$(pwd)/kubeconfig`
 1. Deploy the cert-manager with `kubectl apply -f manifests/cert-manager`
 1. Deploy TTN stack with `kubectl apply -k manifests`

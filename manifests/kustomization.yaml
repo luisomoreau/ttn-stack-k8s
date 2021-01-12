@@ -17,6 +17,10 @@ resources:
 - stack/deployment.yaml
 - stack/service.yaml
 - stack/ingress.yaml
+- grafana/deployment.yaml
+- grafana/pvc.yaml
+- grafana/service.yaml
+- grafana/ingress.yaml
 
 # namespace to deploy all Resources to
 namespace: lorawan-stack
@@ -34,6 +38,9 @@ images:
   - name: redis
     newName: redis
     newTag: "6.2-rc"
+  - name: grafana
+    newName: grafana/grafana
+    newTag: "7.3.6"
   - name: ttn-stack
     newName: thethingsnetwork/lorawan-stack
     newTag: "3.10"
