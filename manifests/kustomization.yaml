@@ -4,6 +4,7 @@ kind: Kustomization
 # Add this is you want to expose the admin dashboard of traefik
 # - traefik/ingress.yaml
 resources:
+- cert-issuer.yaml
 - traefik/rbac.yaml
 - traefik/crd.yaml
 - traefik/configmap.yaml
