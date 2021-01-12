@@ -5,10 +5,12 @@ metadata:
     app: grafana
   name: grafana
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: grafana
+  replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
