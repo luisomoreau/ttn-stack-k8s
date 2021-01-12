@@ -24,7 +24,6 @@ resources:
 - prometheus/pvc.yaml
 - prometheus/deployment.yaml
 - prometheus/service.yaml
-- prometheus/ingress.yaml
 - grafana/deployment.yaml
 - grafana/pvc.yaml
 - grafana/service.yaml
