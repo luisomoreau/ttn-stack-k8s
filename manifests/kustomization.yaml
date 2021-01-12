@@ -18,6 +18,13 @@ resources:
 - stack/deployment.yaml
 - stack/service.yaml
 - stack/ingress.yaml
+- prometheus/psp.yaml
+- prometheus/rbac.yaml
+- prometheus/configmap.yaml
+- prometheus/pvc.yaml
+- prometheus/deployment.yaml
+- prometheus/service.yaml
+- prometheus/ingress.yaml
 - grafana/deployment.yaml
 - grafana/pvc.yaml
 - grafana/service.yaml
@@ -39,6 +46,9 @@ images:
   - name: redis
     newName: redis
     newTag: "6.2-rc"
+  - name: prometheus
+    newName: prom/prometheus
+    newTag: v2.19.0
   - name: grafana
     newName: grafana/grafana
     newTag: "7.3.6"

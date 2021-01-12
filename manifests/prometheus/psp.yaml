@@ -1,0 +1,43 @@
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: prometheus
+  labels:
+    component: "prometheus"
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  allowedCapabilities:
+    - 'CHOWN'
+  volumes:
+    - 'configMap'
+    - 'persistentVolumeClaim'
+    - 'emptyDir'
+    - 'secret'
+    - 'hostPath'
+  allowedHostPaths:
+    - pathPrefix: /etc
+      readOnly: true
+    - pathPrefix: /data
+  hostNetwork: false
+  hostPID: false
+  hostIPC: false
+  runAsUser:
+    rule: 'RunAsAny'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      # Forbid adding the root group.
+      - min: 1
+        max: 65535
+  readOnlyRootFilesystem: false
+

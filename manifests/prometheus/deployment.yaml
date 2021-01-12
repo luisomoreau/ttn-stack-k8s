@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: prometheus
+      name: prometheus
+    spec:
+      serviceAccountName: prometheus
+      containers:
+        - name: prometheus
+          image: prometheus
+          imagePullPolicy: IfNotPresent
+          args:
+            - --log.level=info
+            - --config.file=/etc/config/prometheus.yml
+            - --storage.tsdb.path=/prometheus/data
+            - --storage.tsdb.retention.time=30d
+            - --storage.tsdb.min-block-duration=2h
+            - --storage.tsdb.max-block-duration=2h
+            - --web.enable-lifecycle
+            - --web.console.libraries=/usr/share/prometheus/console_libraries
+            - --web.console.templates=/usr/share/prometheus/consoles
+          ports:
+            - name: web
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1G
+            requests:
+              cpu: 200m
+              memory: 128Mi
+          volumeMounts:
+            - name: prometheus-config
+              mountPath: /etc/config
+            - name: storage-volume
+              mountPath: /prometheus/data
+      securityContext:
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+      terminationGracePeriodSeconds: 300
+      volumes:
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: prometheus-data
