@@ -17,6 +17,11 @@ The following resources will be created:
 - Load Balancer
 - Two block Storages of 2GB each
 
+### Setting up environment
+
+1. Configure Terraform Provider authentication with Scaleway credentials: [https://registry.terraform.io/providers/scaleway/scaleway/latest/docs#authentication](https://registry.terraform.io/providers/scaleway/scaleway/latest/docs#authentication)
+1. Clone this repository
+
 ### Installing
 
 1. Initialize terraform states with `tf init`
