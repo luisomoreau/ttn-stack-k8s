@@ -35,9 +35,11 @@ The following resources will be created:
    - manifests/grafana/ingress.yaml
 1. Import the generated kubeconfig file with `export KUBECONFIG=$(pwd)/kubeconfig`
 1. Deploy the cert-manager with `kubectl apply -f manifests/cert-manager`
-1. Deploy TTN stack with `kubectl apply -k manifests`
+1. Deploy TTN stack with `kubectl apply -k manifests`.
+	The configuration will give something similar to the following diagram:
+![flow-diagram](assets/flow-diagram.png)
 
-1. Execute the following commands (do not forget to replace `ttn-lw-stack-xxxxxxxxxxx-xxxx` with your pod and `your-email@tld.com` with your email):
+1. Execute the following commands and do not forget to replace `ttn-lw-stack-xxxxxxxxxxx-xxxx` with your pod and `your-email@tld.com` with your email:
 
 ```
 $> kubectl get pods -n lorawan-stack
