@@ -31,7 +31,7 @@ The following resources will be created:
 1. Deploy the cert-manager with `kubectl apply -f manifests/cert-manager`
 1. Deploy TTN stack with `kubectl apply -k manifests`
 
-1. Execute the following commands (and replace:
+1. Execute the following commands (do not forget to replace `ttn-lw-stack-xxxxxxxxxxx-xxxx` with your pod and `your-email@tld.com` with your email):
 
 ```
 $> kubectl get pods -n lorawan-stack
