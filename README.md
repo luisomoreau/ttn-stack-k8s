@@ -30,6 +30,37 @@ The following resources will be created:
 1. Deploy the cert-manager with `kubectl apply -f manifests/cert-manager`
 1. Deploy TTN stack with `kubectl apply -k manifests`
 
+1. Execute the following commands (and replace:
+
+```
+$> kubectl get pods -n lorawan-stack
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-cc5fcd64f-5gsr6           1/1     Running   0          2m43s
+ttn-lw-stack-xxxxxxxxxxx-xxxx   1/1     Running   1          2m40s
+```
+
+
+```
+$> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-admin-user \
+--id admin \
+--email your-email@tld.com
+```
+
+```
+$> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-oauth-client \
+ --id cli \
+ --name "Command Line Interface" \
+ --owner admin \
+ --no-secret \
+ --redirect-uri "local-callback" \
+ --redirect-uri "code"
+```
+ 
+```
+$> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-oauth-client  --id console  --name "Console"  --owner admin  --secret "console"  --redirect-uri "https://ttn.louismoreau.eu/console/oauth/callback"  --redirect-uri "/console/oauth/callback"  --logout-redirect-uri "https://ttn.louismoreau.eu/console"  --logout-redirect-uri "/console"
+```
+
+
 ### Using
 
 A lorawan-stack namespace have been created, and contains a LoadBalancer resource

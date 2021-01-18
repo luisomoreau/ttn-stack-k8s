@@ -1,8 +1,8 @@
 terraform {}
 
 provider scaleway {
-  zone   = "fr-par-1"
-  region = "fr-par"
+  zone   = "nl-ams-1"
+  region = "nl-ams"
 }
 
 # Database
@@ -18,7 +18,7 @@ resource scaleway_rdb_instance_beta ttndb {
   is_ha_cluster = true
   user_name     = "root"
   password      = random_password.db_password.result
-  tags          = ["tf-test", "pro"]
+  tags          = ["ttn", "k8s"]
 }
 
 # Kapsule
@@ -26,7 +26,7 @@ resource scaleway_k8s_cluster_beta ttn {
   name    = "ttn"
   version = "1.20.1"
   cni     = "cilium"
-  tags    = ["tf-test", "pro"]
+  tags    = ["ttn", "k8s"]
 }
 
 resource scaleway_k8s_pool_beta ttn {
