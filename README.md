@@ -64,7 +64,17 @@ $> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-sta
 ```
 
 ```
-$> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-oauth-client  --id console  --name "Console"  --owner admin  --secret "console"  --redirect-uri "https://ttn.louismoreau.eu/console/oauth/callback"  --redirect-uri "/console/oauth/callback"  --logout-redirect-uri "https://ttn.louismoreau.eu/console"  --logout-redirect-uri "/console"
+$> CONSOLE_SECRET="your-console-secret"
+$> SERVER_ADDRESS="your-server-address"
+$> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-oauth-client \
+  --id console \
+  --name "Console" \
+  --owner admin \
+  --secret "${CONSOLE_SECRET}" \
+  --redirect-uri "${SERVER_ADDRESS}/console/oauth/callback" \
+  --redirect-uri "/console/oauth/callback" \
+  --logout-redirect-uri "${SERVER_ADDRESS}/console" \
+  --logout-redirect-uri "/console"
 ```
 
 
