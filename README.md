@@ -5,8 +5,9 @@
 ### Prerequisites
 
 You'll need:
-- Terraform
 - A Scaleway account to deploy the stack to
+- Terraform & kubectl installed locally
+- A domain name
 
 ### What will happen
 
@@ -55,7 +56,7 @@ $> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-sta
  --redirect-uri "local-callback" \
  --redirect-uri "code"
 ```
- 
+
 ```
 $> kubectl exec -ti -n lorawan-stack ttn-lw-stack-xxxxxxxxxx-xxxxx -- ttn-lw-stack is-db create-oauth-client  --id console  --name "Console"  --owner admin  --secret "console"  --redirect-uri "https://ttn.louismoreau.eu/console/oauth/callback"  --redirect-uri "/console/oauth/callback"  --logout-redirect-uri "https://ttn.louismoreau.eu/console"  --logout-redirect-uri "/console"
 ```
