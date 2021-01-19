@@ -24,7 +24,7 @@ resource scaleway_rdb_instance_beta ttndb {
 # Kapsule
 resource scaleway_k8s_cluster_beta ttn {
   name    = "ttn"
-  version = "1.20.1"
+  version = "1.20.2"
   cni     = "cilium"
   tags    = ["ttn", "k8s"]
 }
