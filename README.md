@@ -39,6 +39,21 @@ The following resources will be created:
 	The configuration will give something similar to the following diagram:
 ![flow-diagram](assets/flow-diagram.png)
 
+1. Get the `traefik-ingress-lb` Load Balancer IP address and create a `type A` DNS zone with your domain name:
+```
+$> kubectl -n lorawan-stack get svc
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                                                                                                                                                                AGE
+grafana                    ClusterIP      10.35.59.46     <none>           3000/TCP                                                                                                                                                               2h
+prometheus                 ClusterIP      10.33.18.74     <none>           80/TCP                                                                                                                                                                 2h
+redis                      ClusterIP      10.37.55.243    <none>           6379/TCP                                                                                                                                                               2h
+traefik-api                ClusterIP      10.47.92.232    <none>           8080/TCP                                                                                                                                                               2h
+traefik-ingress-lb         LoadBalancer   10.44.140.93    51.158.131.XXX   80:31446/TCP,443:30103/TCP                                                                                                                                             2h
+ttn-lw-stack               LoadBalancer   10.46.112.10    51.158.130.XXX   1881:32410/TCP,8881:31367/TCP,1882:32002/TCP,8882:30789/TCP,1883:31411/TCP,8883:31264/TCP,1884:32587/TCP,8884:32385/TCP,8886:31414/TCP,1887:32745/TCP,8887:31778/TCP   2h
+ttn-lw-stack-semtech-fwd   NodePort       10.33.146.181   <none>           1700:30217/UDP                                                                                                                                                         2h
+ttn-lw-stack-web           ClusterIP      10.45.165.166   <none>           80/TCP,443/TCP                                                                                                                                                         2h
+```
+Here is what the A field would look like: ```ttn 60 IN A 51.158.131.XXX```
+
 1. Execute the following commands and do not forget to replace `ttn-lw-stack-xxxxxxxxxxx-xxxx` with your pod and `your-email@tld.com` with your email:
 
 ```
@@ -89,6 +104,7 @@ See https://www.thethingsindustries.com/docs/getting-started/ for more documenta
 ## How it works
 
 The repository looks something like this:
+
 ```
 .
 ├── README.md
@@ -121,6 +137,18 @@ The cluster bootstrap is done in two stages:
   o redis for storage and caching
 - Installation of TTN stack
 
+## Contributors
+
+<table>
+<tr>
+	<td align="center"><a href="https://twitter.com/didjcodt"><img src="https://avatars3.githubusercontent.com/u/3254450?v=4" width="100px;" alt="Clément Decoodt"/><br /><sub><b>Clément Decoodt</b></sub></a><br /><a href="https://github.com/didjcodt/" title="Code">💻</a>
+	</td>
+<td align="center"><a href="https://twitter.com/luisomoreau"><img src="https://avatars1.githubusercontent.com/u/4725870?v=4" width="100px;" alt="Louis MOREAU"/><br /><sub><b>Louis MOREAU</b></sub></a><br /><a href="https://github.com/luisomoreau" title="Code">💻</a></td>
+</tr>
+</table>
+
+Feel free to submit a Pull Request and don't forget to add you name and your useful links.
+
 ## Contributing
 
-See Scaleway contributing guide, ping me on slack (@didjcodt)
+See Scaleway contributing guide or ping @didjcodt on [Scaleway's Slack community](https://slack.scaleway.com/)

@@ -5,8 +5,8 @@ metadata:
 spec:
   acme:
     email: yourmail@scaleway.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory # Comment this line for production purposes
-    # server: https://acme-staging-v02.api.letsencrypt.org/directory # Comment this line testing purposes
+    #server: https://acme-staging-v02.api.letsencrypt.org/directory # Comment this line for production purposes
+    server: https://acme-v02.api.letsencrypt.org/directory # Comment this line testing purposes
     privateKeySecretRef:
       name: acme-account-key
     solvers:
